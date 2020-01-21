@@ -267,6 +267,7 @@ redis:
 ## Server
 server:
   name: server
+  useRollouts: false
 
   image:
     repository: # argoproj/argocd

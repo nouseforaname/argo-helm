@@ -1,5 +1,10 @@
+{{- if Values.server.useRollout }}
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+{{- else }}
 apiVersion: apps/v1
 kind: Deployment
+{{- end }}
 metadata:
   name: {{ template "argo-cd.server.fullname" . }}
   labels:
@@ -11,6 +16,12 @@ metadata:
     app.kubernetes.io/component: {{ .Values.server.name }}
     app.kubernetes.io/version: {{ default .Values.global.image.tag .Values.server.image.tag | quote }}
 spec:
+{{- if Values.server.useRollout }}
+  strategy:
+    blueGreen:
+      activeService: {{ template "helm-guestbook.fullname" . }}
+      previewService: {{ template "helm-guestbook.fullname" . }}-preview
+{{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "argo-cd.name" . }}-{{ .Values.server.name }}
