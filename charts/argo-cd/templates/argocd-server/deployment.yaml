@@ -19,8 +19,8 @@ spec:
 {{- if .Values.server.useRollout }}
   strategy:
     blueGreen:
-      activeService: {{ template "helm-guestbook.fullname" . }}
-      previewService: {{ template "helm-guestbook.fullname" . }}-preview
+      activeService: {{ template "argo-cd.server.fullname" . }}
+      previewService: {{ template "argo-cd.server.fullname" . }}-preview
 {{- end }}
   selector:
     matchLabels:
