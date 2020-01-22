@@ -30,7 +30,7 @@ spec:
   selector:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/name: {{ include "argo-cd.name" . }}-{{ .Values.server.name }}
-
+{{- if .Values.server.useRollout }}
 ---
 apiVersion: v1
 kind: Service
@@ -57,4 +57,4 @@ spec:
   selector:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/name: {{ include "argo-cd.name" . }}-{{ .Values.server.name }}
-
+{{- end }}
