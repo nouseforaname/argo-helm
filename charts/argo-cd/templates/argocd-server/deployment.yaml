@@ -17,10 +17,15 @@ metadata:
     app.kubernetes.io/version: {{ default .Values.global.image.tag .Values.server.image.tag | quote }}
 spec:
 {{- if .Values.server.useRollout }}
+  {{- if .Values.server.rolloutStrategy }}
+  strategy: {{ .Values.server.rolloutStrategy }}
+  {{- else }}
+#this will make it work like a deployment, but create an additional service to play around with the config
   strategy:
     blueGreen:
       activeService: {{ template "argo-cd.server.fullname" . }}
       previewService: {{ template "argo-cd.server.fullname" . }}-preview
+  {{- end }}
 {{- end }}
   selector:
     matchLabels:
