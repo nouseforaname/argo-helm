@@ -25,20 +25,6 @@ metadata:
   name: argo-events-role
 rules:
   - apiGroups:
-      - apiextensions.k8s.io
-      - apiextensions.k8s.io/v1beta1
-    verbs:
-      - create
-      - delete
-      - deletecollection
-      - get
-      - list
-      - patch
-      - update
-      - watch
-    resources:
-      - customresourcedefinitions
-  - apiGroups:
       - argoproj.io
     verbs:
       - create
@@ -58,6 +44,8 @@ rules:
       - gateways/finalizers
       - sensors
       - sensors/finalizers
+      - eventsources
+      - eventsources/finalizers
   - apiGroups:
       - ""
     resources:
@@ -89,9 +77,7 @@ rules:
       - patch
       - delete
   - apiGroups:
-      - "apps/v1"
-      - "apps/v1beta2"
-      - "apps/v1beta1"
+      - "apps"
     resources:
       - deployments
     verbs:
@@ -102,3 +88,4 @@ rules:
       - update
       - patch
       - delete
+
