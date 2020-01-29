@@ -24,6 +24,9 @@ kind: ClusterRole
 metadata:
   name: argo-events-role
 rules:
+{{- if .Values.additionalServiceAccountRules }}
+{{ .Values.additionalServiceAccountRules | toYaml | nindent 2}}
+{{- end }}
   - apiGroups:
       - argoproj.io
     verbs:
